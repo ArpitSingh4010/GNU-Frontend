@@ -67,7 +67,8 @@ export default function LoginPage() {
 							}
 							if (id && password) {
 								localStorage.setItem('loggedIn', 'true');
-								router.replace('/lab');
+								localStorage.setItem('userEmail', id);
+								router.replace('/profile');
 							}
 						}} style={{ display: 'flex', flexDirection: 'column', gap: 12, width: '100%' }}>
 							<input name="id" type="email" placeholder="SRM Email ID" style={{ padding: '0.5rem', borderRadius: 5, border: '1px solid #ccc', fontSize: 15 }} required />

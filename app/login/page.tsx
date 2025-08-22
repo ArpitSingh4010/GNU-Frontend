@@ -17,7 +17,8 @@ export default function LoginPage() {
   const handleLogin = () => {
     // Mock login: set localStorage and redirect
     localStorage.setItem('loggedIn', 'true');
-    router.replace('/');
+    localStorage.setItem('userEmail', 'guest@srmist.edu.in');
+    router.replace('/profile');
   };
 
   return (
@@ -45,7 +46,8 @@ export default function LoginPage() {
               }
               if (id && password) {
                 localStorage.setItem('loggedIn', 'true');
-                window.location.replace('/');
+                localStorage.setItem('userEmail', id);
+                window.location.replace('/profile');
               }
             }} style={{ display: 'flex', flexDirection: 'column', gap: 12, width: '100%' }}>
               <input name="id" type="email" placeholder="SRM Email ID" style={{ padding: '0.5rem', borderRadius: 5, border: '1px solid #ccc', fontSize: 15 }} required />
