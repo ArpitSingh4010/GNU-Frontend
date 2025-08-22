@@ -5,6 +5,7 @@
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { extractUserDetailsFromEmail } from '../utils/userUtils';
 
 export default function LoginPage() {
 	const router = useRouter();
@@ -66,9 +67,20 @@ export default function LoginPage() {
 								return;
 							}
 							if (id && password) {
-								localStorage.setItem('loggedIn', 'true');
-								localStorage.setItem('userEmail', id);
-								router.replace('/profile');
+								try {
+									const userDetails = extractUserDetailsFromEmail(id);
+									localStorage.setItem('loggedIn', 'true');
+									localStorage.setItem('userEmail', id);
+									localStorage.setItem('userName', userDetails.name);
+									localStorage.setItem('userRegistrationNumber', userDetails.registrationNumber);
+								} catch (error) {
+									console.error('Error extracting user details:', error);
+									localStorage.setItem('loggedIn', 'true');
+									localStorage.setItem('userEmail', id);
+									localStorage.setItem('userName', 'User');
+									localStorage.setItem('userRegistrationNumber', 'N/A');
+								}
+								router.replace('/lab');
 							}
 						}} style={{ display: 'flex', flexDirection: 'column', gap: 12, width: '100%' }}>
 							<input name="id" type="email" placeholder="SRM Email ID" style={{ padding: '0.5rem', borderRadius: 5, border: '1px solid #ccc', fontSize: 15 }} required />
